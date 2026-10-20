@@ -1,0 +1,52 @@
+:root{
+  --ink:#0f2a2e; --paper:#f3f5f4; --lace:#f2c230; --sole:#d9dedc; --mid:#4b6266;
+  --display:'Bricolage Grotesque',system-ui,sans-serif;
+  --body:'DM Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1.05rem/1.6 var(--body)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+
+.top{display:flex;justify-content:space-between;align-items:center;padding:1rem clamp(1rem,5vw,4rem)}
+.brand{font:800 1.4rem var(--display);text-decoration:none}
+nav a{margin-left:1.5rem;text-decoration:none;font-weight:500}
+nav a:hover{text-decoration:underline}
+
+main{padding:0 clamp(1rem,5vw,4rem)}
+section{padding:3rem 0;max-width:62rem}
+h1,h2{font-family:var(--display);line-height:1.05;margin:0 0 1rem}
+h1{font-size:clamp(2.6rem,8vw,5.5rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800}
+.lead{max-width:36rem;color:var(--mid);font-size:1.2rem}
+
+/* size ruler: the memorable bit */
+.ruler{display:flex;flex-wrap:wrap;gap:0;margin:2rem 0 1.5rem;border-bottom:4px solid var(--ink);max-width:40rem}
+.ruler button{
+  flex:1 0 3rem;min-height:4.5rem;padding:0;background:none;border:0;border-left:2px solid var(--ink);
+  font:700 1.3rem var(--display);color:var(--ink);cursor:pointer;display:flex;align-items:flex-end;justify-content:flex-start;padding:0 0 .4rem .5rem;
+  transition:background .15s, min-height .15s;
+}
+.ruler button:hover{background:var(--sole)}
+.ruler button[aria-pressed="true"]{background:var(--lace);min-height:6rem}
+
+.btn{display:inline-block;background:var(--ink);color:var(--paper);padding:.85rem 1.4rem;border-radius:.4rem;font-weight:700;text-decoration:none;border:2px solid var(--ink)}
+.btn:hover{background:var(--lace);color:var(--ink)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--sole)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1.25rem}
+.card{border-top:4px solid var(--ink);padding:1rem 0 0}
+.card h3{font:800 1.5rem var(--display);margin:0 0 .25rem}
+.card p{margin:0 0 .75rem;color:var(--mid)}
+.card a{font-weight:700}
+
+dl{display:grid;grid-template-columns:7rem 1fr;gap:.5rem 1rem;margin:0 0 1.5rem}
+dt{font-weight:700}
+dd{margin:0}
+.links{display:flex;flex-wrap:wrap;gap:.75rem}
+
+footer{padding:2rem clamp(1rem,5vw,4rem);color:var(--mid);border-top:1px solid var(--sole)}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ruler button{transition:none}}

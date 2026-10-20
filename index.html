@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EJ Shoes</title>
+  <meta name="description" content="EJ Shoes. Pick your size and message us on WhatsApp.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="#">EJ Shoes</a>
+    <nav>
+      <a href="#range">Our range</a>
+      <a href="#visit">Visit us</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Find your pair.<br>Start with your size.</h1>
+      <p class="lead">Choose your UK size, then message us. We’ll tell you what we have in stock.</p>
+
+      <div class="ruler" role="group" aria-label="UK shoe size" id="sizes"></div>
+
+      <a class="btn" id="sizeLink" href="#">Ask about your size on WhatsApp</a>
+    </section>
+
+    <section id="range" class="range">
+      <h2>Our range</h2>
+      <div class="grid" id="cats"></div>
+    </section>
+
+    <section id="visit" class="visit">
+      <h2>Visit us</h2>
+      <dl>
+        <dt>Address</dt><dd id="addr"></dd>
+        <dt>Phone</dt><dd id="phone"></dd>
+        <dt>Hours</dt><dd id="hours"></dd>
+      </dl>
+      <p class="links">
+        <a class="btn" id="mapLink" href="#">Open in Google Maps</a>
+        <a class="btn ghost" id="fbLink" href="#">Facebook page</a>
+      </p>
+    </section>
+  </main>
+
+  <footer>© <span id="year"></span> EJ Shoes</footer>
+  <script src="script.js"></script>
+</body>
+</html>
