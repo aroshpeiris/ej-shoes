@@ -4,58 +4,67 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>EJ Shoes</title>
-  <meta name="description" content="EJ Shoes. Pick your size and colour, then order on WhatsApp.">
+  <meta name="description" content="EJ Shoes. Pick your size, pick your colour, order on WhatsApp.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <symbol id="shoe" viewBox="0 0 300 140">
-      <path d="M8 108H294V114Q294 130 276 130H28Q8 130 8 114Z" fill="#0f2233"/>
-      <path d="M18 108L26 62Q29 40 52 38L92 34Q118 62 150 64L224 70Q270 77 286 106L290 108Z" fill="currentColor"/>
-      <path d="M52 38Q58 12 98 14L114 22L92 34Z" fill="currentColor" opacity=".75"/>
-      <path d="M96 44L112 56M112 40L128 54M128 38L144 52" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
-      <path d="M40 96Q120 84 262 98" stroke="#fff" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <symbol id="shoe" viewBox="0 0 200 100">
+      <path d="M20 66 L22 36 Q24 24 38 26 L62 32 Q78 20 96 30 L112 40 Q150 44 176 58 Q192 64 184 66Z" fill="var(--c)"/>
+      <path d="M62 32 L74 46 M78 29 L90 43 M96 30 L106 42" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <path d="M8 74 Q8 66 20 66 L184 66 Q196 66 194 76 Q192 86 180 86 L22 86 Q8 86 8 74Z" fill="#fff"/>
+      <path d="M12 78 H190" stroke="#0b2a3f" stroke-opacity=".25" stroke-width="3"/>
     </symbol>
   </svg>
 
-  <header class="top">
-    <a class="brand" href="#top">EJ<span>Shoes</span></a>
-    <nav>
-      <a href="#top">Home</a>
-      <a href="#featured">Featured</a>
-      <a href="#catalog">Catalog</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <a class="chat" id="chatLink" href="#">WhatsApp</a>
+  <header class="nav">
+    <a class="brand" href="#home">EJ Shoes</a>
+    <nav><a href="#home">Home</a><a href="#picks">Top picks</a><a href="#shop">Shop</a><a href="#visit">Visit us</a></nav>
   </header>
 
-  <section class="hero" id="top">
-    <div class="stage"><span class="bigword" aria-hidden="true">EJ</span><div id="heroShoe"></div></div>
-    <div class="info" id="heroInfo"></div>
-  </section>
+  <main>
+    <section id="home" class="hero">
+      <div class="ghost" aria-hidden="true">EJ</div>
+      <div class="stage">
+        <div class="bigshoe" id="heroShoe"></div>
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+      <div class="info">
+        <h1 id="heroName"></h1>
+        <p class="price" id="heroPrice"></p>
+        <p class="desc">Light, comfortable and made for every day. Pick your size and colour, then order on WhatsApp.</p>
+        <h2>Size (UK)</h2>
+        <div class="sizes" id="heroSizes"></div>
+        <h2>Colour</h2>
+        <div class="dots" id="heroColors"></div>
+        <a class="btn" id="heroBuy" href="#">Order on WhatsApp</a>
+      </div>
+    </section>
 
-  <section class="featured" id="featured"><div class="cards" id="featCards"></div></section>
+    <section id="picks" class="picks" aria-label="Top picks"></section>
 
-  <section class="catalog" id="catalog">
-    <div class="filters">
-      <label>Size <input type="range" id="fSize" min="2" max="12" value="2"><output id="oSize">Any</output></label>
-      <label>Price <input type="range" id="fPrice" min="3000" max="15000" step="500" value="15000"><output id="oPrice"></output></label>
-      <div class="fcolors" id="fColors" role="group" aria-label="Colour"></div>
+    <section id="shop" class="shop">
+      <div class="filters">
+        <label>Size <input type="range" id="fSize" min="2" max="12" value="2"><output id="oSize">Any</output></label>
+        <label>Price <input type="range" id="fPrice" min="3000" max="20000" step="500" value="20000"><output id="oPrice"></output></label>
+        <div class="fcolor"><span>Colour</span><div class="dots" id="fColors"></div></div>
+      </div>
+      <div class="grid" id="grid"></div>
+      <p class="none" id="none" hidden>No shoes match. Try a different size, price or colour.</p>
+      <div class="pager" id="pager"></div>
+    </section>
+  </main>
+
+  <footer id="visit">
+    <div class="cols">
+      <div><h3>Visit us</h3><p id="addr"></p><p id="phone"></p><p id="hours"></p></div>
+      <div><h3>Order</h3><a id="waLink" href="#">WhatsApp us</a><a id="mapLink" href="#">Find us on Google Maps</a><a id="fbLink" href="#">Facebook page</a></div>
+      <div><h3>Help</h3><p>Not sure of your size? Message us and we will help.</p></div>
     </div>
-    <div class="grid" id="grid"></div>
-    <p class="empty" id="empty" hidden>No shoes match. Change the size, price or colour.</p>
-  </section>
-
-  <footer id="contact">
-    <div class="fcols">
-      <div><h4>Visit EJ Shoes</h4><p id="addr"></p><p id="hours"></p></div>
-      <div><h4>Order</h4><p id="phone"></p><p><a id="chatLink2" href="#">Message us on WhatsApp</a></p></div>
-      <div><h4>Find us</h4><p><a id="mapLink" href="#">Google Maps</a></p><p><a id="fbLink" href="#">Facebook</a></p></div>
-    </div>
-    <p class="copy">© <span id="year"></span> EJ Shoes. Sample products and prices, replace with your own.</p>
+    <p class="copy">© <span id="year"></span> EJ Shoes. All rights reserved.</p>
   </footer>
   <script src="script.js"></script>
 </body>
