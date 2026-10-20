@@ -1,100 +1,110 @@
-// ===== EDIT THESE DETAILS =====
+// ===== EDIT YOUR SHOP DETAILS HERE =====
 const SHOP = {
   name: "EJ Shoes",
-  whatsapp: "94XXXXXXXXX",          // country code + number, no + or spaces
-  phone: "Add your phone number",
-  address: "Add your shop address",
-  hours: "Add your opening hours",
+  whatsapp: "94XXXXXXXXX",           // 94 + number, no + or spaces
+  phone: "Phone: add your number",
+  address: "Address: add your shop address",
+  hours: "Hours: add your opening hours",
   mapsUrl: "https://maps.app.goo.gl/aCC7oVQ3DdD2i1SN9",
   facebookUrl: "https://www.facebook.com/profile.php?id=100069342180225"
 };
-const COLORS = { blue:"#2bb3e8", yellow:"#f5b82e", orange:"#f26b2d", red:"#e8453c", green:"#3ec65a" };
-// SAMPLE products and prices (Rs.). Replace with your real stock.
+const COLORS = { Blue:"#1fa8e0", Yellow:"#f2c230", Orange:"#f26b2a", Red:"#e63946", Purple:"#a23fc4", Green:"#3ac569" };
+// SAMPLE products. Replace name, price (Rs), sizes [min,max] and img (e.g. "images/shoe1.jpg") with real ones.
 const PRODUCTS = [
-  { name:"Runner Classic",  price:8500,  sizes:[4,12], colors:["blue","red","yellow"],   desc:"Light everyday runner with a soft, cushioned sole." },
-  { name:"Court Low",       price:9800,  sizes:[5,11], colors:["red","green"],           desc:"Clean low-top for school, work and weekends." },
-  { name:"Trail Master",    price:12500, sizes:[6,12], colors:["orange","blue"],         desc:"Grippy sole built for rough roads and wet days." },
-  { name:"Street Hi",       price:11000, sizes:[4,10], colors:["yellow","red","blue"],   desc:"High-top style with extra ankle support." },
-  { name:"Daily Walk",      price:6500,  sizes:[3,12], colors:["green","blue"],          desc:"Easy slip-on comfort for long days on your feet." },
-  { name:"Kids Sprint",     price:5200,  sizes:[3,6],  colors:["orange","green","red"],  desc:"Flexible, durable shoes for growing feet." },
-  { name:"School Pro",      price:4800,  sizes:[3,9],  colors:["blue"],                  desc:"Hard-wearing shoes for the whole school year." },
-  { name:"Sport Flex",      price:13800, sizes:[5,12], colors:["red","orange","yellow"], desc:"Breathable trainer for gym, court and track." }
+  {name:"Urban Runner",price:9500,color:"Blue",sizes:[6,11],img:""},
+  {name:"City Classic",price:12500,color:"Purple",sizes:[5,10],img:""},
+  {name:"Kids Sprint",price:6500,color:"Green",sizes:[2,6],img:""},
+  {name:"Everyday Slip-on",price:5500,color:"Yellow",sizes:[5,11],img:""},
+  {name:"Street Hi-Top",price:15900,color:"Red",sizes:[6,12],img:""},
+  {name:"Lite Trainer",price:8900,color:"Orange",sizes:[5,10],img:""},
+  {name:"School Black",price:4500,color:"Blue",sizes:[3,9],img:""},
+  {name:"Court Low",price:11900,color:"Green",sizes:[6,11],img:""},
+  {name:"Trail Grip",price:14500,color:"Orange",sizes:[6,12],img:""},
+  {name:"Casual Canvas",price:5900,color:"Yellow",sizes:[4,10],img:""},
+  {name:"Sunset Runner",price:10900,color:"Red",sizes:[5,11],img:""},
+  {name:"Night Walker",price:13500,color:"Purple",sizes:[6,11],img:""}
 ];
-const FEATURED = [ {i:1, bg:"#2bb3e8"}, {i:2, bg:"#6a67a8"}, {i:3, bg:"#09939a"} ];
-// ==============================
+const PICKS = [
+  {p:PRODUCTS[0],bg:"#1fa8e0",word:"RUN",text:"Light daily trainers for work and weekends."},
+  {p:PRODUCTS[1],bg:"#6a65a8",word:"CITY",text:"Smart casual shoes that go with everything."},
+  {p:PRODUCTS[2],bg:"#0a9396",word:"KIDS",text:"Comfortable shoes for growing feet."}
+];
+const PER_PAGE = 8;
+// =======================================
 
-const $ = (s) => document.querySelector(s);
-const rs = (n) => "Rs. " + n.toLocaleString("en-US");
+const $ = (id) => document.getElementById(id);
+const rs = (n) => "Rs " + n.toLocaleString("en-US");
 const wa = (m) => `https://wa.me/${SHOP.whatsapp}?text=${encodeURIComponent(m)}`;
-const shoe = (c) => `<svg class="shoe" viewBox="0 0 300 140" style="color:${c}" aria-hidden="true"><use href="#shoe"/></svg>`;
-const range = ([a, b]) => Array.from({ length: b - a + 1 }, (_, k) => a + k);
+const shoe = (c, img) => img ? `<img src="${img}" alt="">` : `<svg class="shoe" viewBox="0 0 200 100" style="--c:${COLORS[c]}" role="img" aria-label="Shoe"><use href="#shoe"/></svg>`;
+const dot = (name, on) => `<button type="button" style="--c:${COLORS[name]}" data-c="${name}" aria-label="${name}" aria-pressed="${on}"></button>`;
 
-// Hero
-let hp = PRODUCTS[0], hSize = null, hColor = hp.colors[0];
+/* Hero */
+const hero = { p: PRODUCTS[0], size: 8, color: PRODUCTS[0].color };
 function renderHero() {
-  $("#heroShoe").innerHTML = shoe(COLORS[hColor]);
-  const msg = `Hi ${SHOP.name}, I want the ${hp.name} in ${hColor}` + (hSize ? `, UK size ${hSize}.` : ".");
-  $("#heroInfo").innerHTML = `
-    <h1>${hp.name}</h1><p class="price">${rs(hp.price)}</p><p class="desc">${hp.desc}</p>
-    <h2>UK size</h2>
-    <div class="sizes">${range(hp.sizes).map(s => `<button type="button" data-size="${s}" aria-pressed="${s === hSize}">${s}</button>`).join("")}</div>
-    <h2>Colour</h2>
-    <div class="dots">${hp.colors.map(c => `<button type="button" data-color="${c}" aria-label="${c}" aria-pressed="${c === hColor}" style="background:${COLORS[c]}"></button>`).join("")}</div>
-    <a class="buy" href="${wa(msg)}">Order on WhatsApp</a>`;
+  const { p, size, color } = hero;
+  $("heroShoe").innerHTML = shoe(color, p.img);
+  $("heroName").textContent = p.name;
+  $("heroPrice").textContent = rs(p.price);
+  $("heroSizes").innerHTML = [6,7,8,9,10].map(s => `<button type="button" data-s="${s}" aria-pressed="${s===size}">${s}</button>`).join("");
+  $("heroColors").innerHTML = Object.keys(COLORS).map(c => dot(c, c===color)).join("");
+  $("thumbs").innerHTML = Object.keys(COLORS).slice(0,4).map(c => `<button type="button" data-c="${c}" aria-label="${c} view" aria-pressed="${c===color}">${shoe(c, p.img)}</button>`).join("");
+  $("heroBuy").href = wa(`Hi ${SHOP.name}, I want the ${p.name} (${color}) in UK size ${size}.`);
 }
-$("#heroInfo").addEventListener("click", (e) => {
+document.addEventListener("click", (e) => {
   const b = e.target.closest("button"); if (!b) return;
-  if (b.dataset.size) hSize = +b.dataset.size;
-  if (b.dataset.color) hColor = b.dataset.color;
-  renderHero();
+  if (b.closest("#heroSizes")) { hero.size = +b.dataset.s; renderHero(); }
+  else if (b.closest("#heroColors") || b.closest("#thumbs")) { hero.color = b.dataset.c; renderHero(); }
 });
 
-// Featured cards
-$("#featCards").innerHTML = FEATURED.map(({ i, bg }) => {
-  const p = PRODUCTS[i];
-  return `<article class="fcard" style="background:${bg}">
-    <div class="top2"><span>${SHOP.name}</span><span>${rs(p.price)}</span></div>
-    <h3>${p.name}</h3><p>${p.desc}</p>
-    <span class="word" aria-hidden="true">${p.name.split(" ")[0].toUpperCase()}</span>
-    ${shoe("#fff")}
-    <a class="cbuy" href="${wa(`Hi ${SHOP.name}, I want the ${p.name}.`)}">Buy</a></article>`;
-}).join("");
+/* Top picks */
+$("picks").innerHTML = PICKS.map(({p,bg,word,text}) => `
+  <article class="pick" style="background:${bg}">
+    <div class="ghost2" aria-hidden="true">${word}</div>
+    <div class="pp"><span>${SHOP.name}</span><span>${rs(p.price)}</span></div>
+    <h3>${p.name}</h3><p>${text}</p>
+    <div class="ps">${shoe(p.color, p.img)}</div>
+    <a href="${wa(`Hi ${SHOP.name}, I'm interested in the ${p.name}.`)}">Order</a>
+  </article>`).join("");
 
-// Filters + grid
-const f = { size: 2, max: 15000, color: null };
-function renderGrid() {
-  $("#oSize").textContent = f.size === 2 ? "Any" : f.size;
-  $("#oPrice").textContent = rs(f.max);
-  const list = PRODUCTS.map((p, i) => ({ p, i })).filter(({ p }) =>
-    (f.size === 2 || (f.size >= p.sizes[0] && f.size <= p.sizes[1])) &&
-    p.price <= f.max && (!f.color || p.colors.includes(f.color)));
-  $("#grid").innerHTML = list.map(({ p, i }) => `
-    <article class="pcard">
-      <button type="button" class="pview" data-i="${i}" aria-label="Preview ${p.name}">${shoe(COLORS[p.colors[0]])}<h3>${p.name}</h3></button>
-      <p class="price">${rs(p.price)}</p>
-      <a class="cbuy" href="${wa(`Hi ${SHOP.name}, I want the ${p.name}` + (f.size > 2 ? `, UK size ${f.size}.` : "."))}">Buy</a>
+/* Shop: filters + grid + pager */
+const f = { size: 2, price: 20000, color: null, page: 1 };
+$("fColors").innerHTML = Object.keys(COLORS).map(c => dot(c, false)).join("");
+$("fColors").addEventListener("click", (e) => {
+  const b = e.target.closest("button"); if (!b) return;
+  f.color = f.color === b.dataset.c ? null : b.dataset.c; f.page = 1;
+  $("fColors").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.c === f.color)));
+  renderShop();
+});
+$("fSize").addEventListener("input", (e) => { f.size = +e.target.value; f.page = 1; renderShop(); });
+$("fPrice").addEventListener("input", (e) => { f.price = +e.target.value; f.page = 1; renderShop(); });
+
+function renderShop() {
+  $("oSize").textContent = f.size === 2 ? "Any" : "UK " + f.size;
+  $("oPrice").textContent = "Up to " + rs(f.price);
+  const list = PRODUCTS.filter(p => p.price <= f.price && (!f.color || p.color === f.color) && (f.size === 2 || (f.size >= p.sizes[0] && f.size <= p.sizes[1])));
+  const pages = Math.max(1, Math.ceil(list.length / PER_PAGE));
+  f.page = Math.min(f.page, pages);
+  const show = list.slice((f.page - 1) * PER_PAGE, f.page * PER_PAGE);
+  $("none").hidden = list.length > 0;
+  $("grid").innerHTML = show.map(p => `
+    <article class="item">
+      <div class="ish">${shoe(p.color, p.img)}</div>
+      <div><h3>${p.name}</h3><p class="ip">${rs(p.price)}</p>
+      <div class="iact"><a href="${wa(`Hi ${SHOP.name}, I'm interested in the ${p.name} (${p.color})${f.size>2?`, UK size ${f.size}`:""}.`)}">Order</a></div></div>
     </article>`).join("");
-  $("#empty").hidden = list.length > 0;
+  let h = `<button type="button" data-g="${f.page-1}" aria-label="Previous page" ${f.page===1?"disabled":""}>‹</button>`;
+  for (let i = 1; i <= pages; i++) h += `<button type="button" data-g="${i}" ${i===f.page?'aria-current="page"':""}>${i}</button>`;
+  h += `<button type="button" data-g="${f.page+1}" aria-label="Next page" ${f.page===pages?"disabled":""}>›</button>`;
+  $("pager").innerHTML = pages > 1 ? h : "";
 }
-$("#fSize").addEventListener("input", (e) => { f.size = +e.target.value; renderGrid(); });
-$("#fPrice").addEventListener("input", (e) => { f.max = +e.target.value; renderGrid(); });
-$("#fColors").innerHTML = Object.keys(COLORS).map(c => `<button type="button" data-c="${c}" aria-label="${c}" aria-pressed="false" style="background:${COLORS[c]}"></button>`).join("");
-$("#fColors").addEventListener("click", (e) => {
-  const b = e.target.closest("button"); if (!b) return;
-  f.color = f.color === b.dataset.c ? null : b.dataset.c;
-  document.querySelectorAll("#fColors button").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.c === f.color)));
-  renderGrid();
-});
-$("#grid").addEventListener("click", (e) => {
-  const b = e.target.closest(".pview"); if (!b) return;
-  hp = PRODUCTS[+b.dataset.i]; hSize = null; hColor = hp.colors[0];
-  renderHero(); window.scrollTo({ top: 0, behavior: "smooth" });
+$("pager").addEventListener("click", (e) => {
+  const b = e.target.closest("button"); if (!b || b.disabled) return;
+  f.page = +b.dataset.g; renderShop(); $("shop").scrollIntoView();
 });
 
-// Contact details
-$("#chatLink").href = $("#chatLink2").href = wa(`Hi ${SHOP.name}, I have a question.`);
-$("#addr").textContent = SHOP.address; $("#hours").textContent = SHOP.hours; $("#phone").textContent = SHOP.phone;
-$("#mapLink").href = SHOP.mapsUrl; $("#fbLink").href = SHOP.facebookUrl;
-$("#year").textContent = new Date().getFullYear();
+/* Footer */
+$("addr").textContent = SHOP.address; $("phone").textContent = SHOP.phone; $("hours").textContent = SHOP.hours;
+$("waLink").href = wa(`Hi ${SHOP.name}!`); $("mapLink").href = SHOP.mapsUrl; $("fbLink").href = SHOP.facebookUrl;
+$("year").textContent = new Date().getFullYear();
 
-renderHero(); renderGrid();
+renderHero(); renderShop();
